@@ -1,6 +1,8 @@
 # vault-example
 
-This demo requires a vault app role id, and secret id provided as environment variables. You can open a User Access Request to get these values for local development.
+This demo requires VAULT_APPROLE_ROLE_ID, and VAULT_APPROLE_SECRET_ID environment variables.
+
+> If you do not have Vault AppRole credentials, request them from the Ops Team - from there make a User [Access Request](https://jira.i.mct360.com/servicedesk/customer/portal/2) (UAR) for resource "Other" and give them the details about what you need.
 
 See it in action:
 

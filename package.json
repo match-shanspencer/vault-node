@@ -1,7 +1,7 @@
 {
   "name": "@match/vault",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Vault integration for NodeJS applications using ES Modules, or CommonJS.",
   "repository": {
     "type": "git",

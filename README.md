@@ -29,7 +29,7 @@ export const secrets = new VaultCachedSecretsManager({
 ```ts
 // index.ts
 import { secrets } from "./secrets";
-import { fetchData } from ".fetchData";
+import { fetchData } from "./fetchData";
 
 function doWork() {
   const myFirstSecret = secrets.getSecret("my/secret/path");
@@ -52,7 +52,7 @@ import { secrets } from "./secrets";
 
 function main() {
   const myOtherSecret = secrets.getSecret("my/other/secret/path");
-  const response = fetch("/some/path", {
+  const response = fetch("/api/endpoint", {
     headers: {
       Authorization: myOtherSecret,
     },

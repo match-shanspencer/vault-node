@@ -3,6 +3,10 @@
   "type": "module",
   "version": "1.0.0",
   "description": "This demo requires VAULT_APPROLE_ROLE_ID, and VAULT_APPROLE_SECRET_ID environment variables.",
+  "repository": {
+    "type": "git",
+    "url": "https://git.i.mct360.com/shannon-spencer/vault-node.git"
+  },
   "module": "NodeNext",
   "exports": {
     ".": {

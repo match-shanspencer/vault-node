@@ -1,4 +1,4 @@
-export default class VaultError extends Error {
+export class VaultError extends Error {
   status: number;
 
   statusText: string;

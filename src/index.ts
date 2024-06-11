@@ -1,17 +1,3 @@
-import "./environment";
-import secrets from "./vault/secrets";
-
-function doSomething() {
-  console.log("okapi/api secrets:");
-  console.log(secrets.getSecret("okapi/api"));
-  console.log("shared/auth/zendesk/messaging secrets:");
-  console.log(secrets.getSecret("shared/auth/zendesk/messaging"));
-}
-
-async function main() {
-  await secrets.initialize(["okapi/api", "shared/auth/zendesk/messaging"]);
-
-  doSomething();
-}
-
-main();
+export { VaultError } from "./VaultError.js";
+export { VaultCachedSecretsManager } from "./VaultCachedSecretsManager.js";
+export { VaultClient } from "./VaultClient.js";

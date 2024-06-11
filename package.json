@@ -1,13 +1,35 @@
 {
-  "scripts": {
-    "start": "ts-node src/index.ts"
+  "name": "@match/vault",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "This demo requires VAULT_APPROLE_ROLE_ID, and VAULT_APPROLE_SECRET_ID environment variables.",
+  "module": "NodeNext",
+  "exports": {
+    ".": {
+      "import": "./dist/mjs/index.js",
+      "require": "./dist/cjs/index.js"
+    }
   },
+  "files": [
+    "dist/**"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {},
   "devDependencies": {
     "@types/node": "^20.14.2",
+    "dotenv": "^16.4.5",
+    "prettier": "^3.3.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   },
-  "dependencies": {
-    "dotenv": "^16.4.5"
-  }
+  "scripts": {
+    "prebuild": "rm -rf ./dist/",
+    "prepublishOnly": "yarn build",
+    "build": "tsc && tsc -p tsconfig.cjs.json && node --loader ts-node/esm scripts/copy-package.js",
+    "example": "node --loader ts-node/esm  ./example/index.ts"
+  },
+  "author": "",
+  "license": "ISC"
 }

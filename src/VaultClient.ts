@@ -1,4 +1,4 @@
-import VaultError from "./VaultError";
+import { VaultError } from "./VaultError.js";
 
 type Config = {
   serviceUrl: string;
@@ -39,7 +39,7 @@ type GetSecretResponse<TData = unknown> = {
   };
 };
 
-export default class Vault {
+export class VaultClient {
   token: string;
 
   serviceUrl: string;
@@ -62,6 +62,18 @@ export default class Vault {
     roleId: string;
     secretId: string;
   }) {
+    if (!this.serviceUrl) {
+      throw new Error("Missing vault serviceUrl");
+    }
+
+    if (!roleId) {
+      throw new Error("Missing vault roleId");
+    }
+
+    if (!secretId) {
+      throw new Error("Missing vault secretId");
+    }
+
     const url = this.resolveUrl(`${this.version}/auth/approle/login`);
 
     const req = await fetch(url, {

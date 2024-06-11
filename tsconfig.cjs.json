@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "moduleResolution": "node",
+    /* Visit https://aka.ms/tsconfig to read more about this file */
+    "target": "esnext" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
+
+    "module": "commonjs" /* Specify what module code is generated. */,
+
+    "outDir": "./dist/cjs" /* Specify an output folder for all emitted files. */
+  }
+}

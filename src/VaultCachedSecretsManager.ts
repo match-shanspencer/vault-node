@@ -1,37 +1,39 @@
-import Vault from "./Vault";
+import { VaultClient } from "./VaultClient.js";
 
 type Config = {
   roleId: string;
   mountPoint?: string;
   secretId: string;
   serviceUrl: string;
+  client?: typeof VaultClient;
 };
 
-export default class VaultCachedSecretsManager {
+export class VaultCachedSecretsManager {
   cache = new Map<string, any>();
 
   initialized = false;
 
-  client: Vault;
+  client: VaultClient;
 
   config: Config;
 
-  constructor() {
-    this.config = this.getConfig();
-    this.client = new Vault({ serviceUrl: this.config.serviceUrl });
+  constructor(config: Partial<Config> = {}) {
+    const Client = config.client || VaultClient;
+    this.config = this.getConfig(config);
+    this.client = new Client({ serviceUrl: this.config.serviceUrl });
   }
 
-  private getConfig() {
+  private getConfig(config?: Partial<Config>) {
     const {
       VAULT_APPROLE_ROLE_ID,
       VAULT_APPROLE_SECRET_ID,
       VAULT_SERVICE_URL,
       VAULT_MOUNT_POINT,
     } = process.env;
-    const roleId = VAULT_APPROLE_ROLE_ID || "";
-    const secretId = VAULT_APPROLE_SECRET_ID || "";
-    const serviceUrl = VAULT_SERVICE_URL || "https://vault.i.mct360.com/";
-    const mountPoint = VAULT_MOUNT_POINT || "match_kv_prod";
+    const roleId = config?.roleId || VAULT_APPROLE_ROLE_ID || "";
+    const secretId = config?.secretId || VAULT_APPROLE_SECRET_ID || "";
+    const serviceUrl = config?.serviceUrl || VAULT_SERVICE_URL || "";
+    const mountPoint = config?.mountPoint || VAULT_MOUNT_POINT || "";
 
     return {
       roleId,
@@ -51,9 +53,7 @@ export default class VaultCachedSecretsManager {
       secretId: this.config.secretId,
     });
 
-    // eslint-disable-next-line no-restricted-syntax, no-loops/no-loops
     for (const secretPath of secretPaths) {
-      // eslint-disable-next-line no-await-in-loop
       const data = await this.client.getSecret({
         secretPath,
         mountPoint: this.config.mountPoint,

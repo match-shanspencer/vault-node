@@ -19,8 +19,8 @@ npm install @match/vault
 import { VaultCachedSecretsManager } from "@match/vault";
 
 export const secrets = new VaultCachedSecretsManager({
-  roleId: process.env.VAULT_APPROLE_ROLE_ID || "my-role-id",
-  secretId: process.env.VAULT_APPROLE_SECRET_ID || "my-role-id",
+  roleId: process.env.VAULT_APPROLE_ROLE_ID,
+  secretId: process.env.VAULT_APPROLE_SECRET_ID,
   serviceUrl: process.env.VAULT_SERVICE_URL || "https://vault-q.i.mct360.com/",
   mountPoint: process.env.VAULT_MOUNT_POINT || "match_kv_qa1",
 });
@@ -50,16 +50,15 @@ main();
 // fetchData.ts
 import { secrets } from "./secrets";
 
-function main() {
+export const fetchData = async () => {
   const myOtherSecret = secrets.getSecret("my/other/secret/path");
-  const response = fetch("/api/endpoint", {
+  const response = await fetch("/api/endpoint", {
     headers: {
       Authorization: myOtherSecret,
     },
   });
 }
 
-main();
 ```
 
 ## Demo

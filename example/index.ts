@@ -2,14 +2,14 @@ import "./environment.js";
 import { secrets } from "./secrets.js";
 
 function doSomething() {
-  console.log("okapi/api secrets:");
-  console.log(secrets.getSecret("okapi/api"));
-  console.log("shared/auth/zendesk/messaging secrets:");
-  console.log(secrets.getSecret("shared/auth/zendesk/messaging"));
+  console.log("Some secret:");
+  console.log(secrets.getSecret("foo/bar"));
+  console.log("Some other secret:");
+  console.log(secrets.getSecret("spam/eggs"));
 }
 
 async function main() {
-  await secrets.initialize(["okapi/api", "shared/auth/zendesk/messaging"]);
+  await secrets.initialize(["foo/bar", "spam/eggs"]);
 
   doSomething();
 }

@@ -1,0 +1,37 @@
+{
+  "lockfileVersion": 2,
+  "configVersion": 0,
+  "workspaces": {
+    "": {
+      "name": "@match/vault",
+      "devDependencies": {
+        "@types/bun": "^1.4.4",
+        "@types/node": "^20.14.2",
+        "dotenv": "^16.4.5",
+        "prettier": "^3.3.2",
+        "typescript": "^5.4.5",
+      },
+    },
+  },
+  "packages": {
+    "@types/bun": ["@types/bun@1.4.4", "https://artifactory.i.mct360.com:443/artifactory/api/npm/npm/@types/bun/-/bun-1.4.4.tgz#37e9d2532c71eabba10b4c88403e4d8ed6f609fe", { "dependencies": { "bun-types": "1.4.4" } }, "sha512-9wkRDXUXK124pEnAutE6n/l18j+i9GC5IAHK8TmX/2nlySETmky0OU6yL5U8pW1AoKh++AN9auDCr647BfurjQ=="],
+
+    "@types/node": ["@types/node@20.14.2", "https://artifactory.i.mct360.com/api/npm/npm/@types/node/-/node-20.14.2.tgz", { "dependencies": { "undici-types": "~5.26.4" } }, "sha512-xyu6WAMVwv6AKFLB+e/7ySZVr/0zLCzOa7rSpq6jNwpqOrUbcACDWC+53d4n2QHOnDou0fbIsg8wZu/sxrnI4Q=="],
+
+    "bun-types": ["bun-types@1.4.4", "https://artifactory.i.mct360.com:443/artifactory/api/npm/npm/bun-types/-/bun-types-1.4.4.tgz#ab6503f57158cc6208fb86c7f438b48636e211df", { "dependencies": { "@types/node": "*", "undici-types": "*" } }, "sha512-yjrJh5oGX7mMPKGd19YXyIjmEuj4G4zNC30bs7PM9Az7NQ3ndF3j6hbeRdvJTRQEhJ/FYQwW0a2moweEi2hMxQ=="],
+
+    "dotenv": ["dotenv@16.4.5", "https://artifactory.i.mct360.com/api/npm/npm/dotenv/-/dotenv-16.4.5.tgz", {}, "sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg=="],
+
+    "prettier": ["prettier@3.3.2", "https://artifactory.i.mct360.com/api/npm/npm/prettier/-/prettier-3.3.2.tgz", { "bin": { "prettier": "bin/prettier.cjs" } }, "sha512-rAVeHYMcv8ATV5d508CFdn+8/pHPpXeIid1DdrPwXnaAdH7cqjVbpJaT5eq4yRAFU/lsbwYwSF/n5iNrdJHPQA=="],
+
+    "typescript": ["typescript@5.4.5", "https://artifactory.i.mct360.com/api/npm/npm/typescript/-/typescript-5.4.5.tgz", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ=="],
+
+    "undici-types": ["undici-types@5.26.5", "https://artifactory.i.mct360.com/api/npm/npm/undici-types/-/undici-types-5.26.5.tgz", {}, "sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA=="],
+
+    "bun-types/@types/node": ["@types/node@26.6.6", "https://artifactory.i.mct360.com:443/artifactory/api/npm/npm/@types/node/-/node-26.6.6.tgz#9ed7b5817e728ed9216ef7c5b7d373fe3b777104", { "dependencies": { "undici-types": "~8.9.0" } }, "sha512-MzQj+8Kx3XI40OmUAE6Qoh58ZMNstNNMwn2nfd3qWsfe7nDNSqJNzes4njhz6AHwrSHOffSLwXU6yb474Q4aog=="],
+
+    "bun-types/undici-types": ["undici-types@8.12.4", "https://artifactory.i.mct360.com:443/artifactory/api/npm/npm/undici-types/-/undici-types-8.12.4.tgz#e474b79d8b8555a56d73c33ae0e362f4c3980dbf", {}, "sha512-GNCQH3MbVGB8OAVAoTiLH8pu4wx5Ni3DWKpnBzGj3WDsi8EwmK0aOVBooNEt+g5YL1eHPxcS9XUTouwFU6j1kQ=="],
+
+    "bun-types/@types/node/undici-types": ["undici-types@8.9.0", "https://artifactory.i.mct360.com:443/artifactory/api/npm/npm/undici-types/-/undici-types-8.9.0.tgz#e240d97c8b5d85e5347ce73d25865c7906c1ec9f", {}, "sha512-KTDyRTYX8sWmKXAikPHHSyc63CRPETMctyjKFupcC6OBLXT3xsN0e9aF7m+mIXutFWpUXuedtowG7iLOzp0kQg=="],
+  }
+}

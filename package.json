@@ -31,7 +31,7 @@
   },
   "scripts": {
     "prebuild": "rm -rf ./dist/",
-    "prepublishOnly": "bun build:package",
+    "prepublishOnly": "bun run build",
     "build": "tsc && tsc -p tsconfig.cjs.json && bun ./scripts/copy-package.js",
     "example": "bun ./example/index.ts",
     "test": "bun test"

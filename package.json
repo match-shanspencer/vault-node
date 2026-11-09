@@ -30,6 +30,7 @@
     "typescript": "^5.4.5"
   },
   "scripts": {
+    "prepare": "bun run build",
     "prebuild": "rm -rf ./dist/",
     "prepublishOnly": "bun run build",
     "build": "tsc && tsc -p tsconfig.cjs.json && bun ./scripts/copy-package.js",

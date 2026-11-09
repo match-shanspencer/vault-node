@@ -90,7 +90,7 @@ async function main() {
 ```ts
 import { secrets } from "./secrets";
 
-async function doWork() {
+async function main() {
   try {
     const secret = await secrets.getSecretAsync("my/secret/path");
     console.log(secret);
@@ -105,7 +105,7 @@ async function doWork() {
 ```ts
 import { secrets } from "./secrets";
 
-async function doWork() {
+async function main() {
   const secret = await secrets.tryGetSecretAsync("my/secret/path");
 
   if (secret.data) {
@@ -122,13 +122,23 @@ async function doWork() {
 import { VaultCachedSecretsManager, MemoryCache } from "@match/vault";
 
 const envValuesMap = new Map([
-  ["myCustomCacheKey", process.env.CUSTOM_CACHE_VALUE],
+  ["myCustomKeyInEnvValuesMap", process.env.CUSTOM_CACHE_VALUE],
 ]);
 
 class EnvCache extends MemoryCache {
   keysFor(key: string) {
     switch (key) {
-      case "myCustomCacheKey": {
+      case "myCustomKeyInEnvValuesMap": {
+        return {
+          cacheKey: key,
+          // Used to fetched from vault on cache miss.
+          // Example:
+          // process.env.CUSTOM_CACHE_VALUE is provided by an External Secrets Operator, env file, or from command line in a staging environment -> not used
+          // process.env.CUSTOM_CACHE_VALUE is undefined in a development environment -> used to fetch value from vault.
+          vaultPath: "some/path/in/vault",
+        };
+      }
+      case "myCustomKeyNOTInEnvValuesMap": {
         return {
           cacheKey: key,
           vaultPath: "some/path/in/vault",
@@ -136,10 +146,7 @@ class EnvCache extends MemoryCache {
       }
     }
 
-    return {
-      cacheKey: key,
-      vaultPath: key,
-    };
+    return super(key);
   }
 }
 
@@ -150,4 +157,17 @@ const secrets = new VaultCachedSecretsManager({
   mountPoint: "YOUR_MOUNT_POINT_NAME",
   cache: new EnvCache(envValuesMap),
 });
+
+async function main() {
+  const mySecretFromEnv = await secrets.tryGetSecretAsync(
+    "myCustomKeyInEnvValuesMap"
+  );
+  const mySecretFromVault = await secrets.tryGetSecretAsync(
+    "myCustomKeyNOTInEnvValuesMap"
+  );
+
+  if (mySecret.data) {
+    console.log(mySecret.data);
+  }
+}
 ```

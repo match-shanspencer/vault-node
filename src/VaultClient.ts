@@ -55,6 +55,31 @@ export class VaultClient {
     return new URL(url, this.serviceUrl).toString();
   }
 
+  // Refresh this long before the real expiry so a token cannot expire mid-request.
+  private static readonly tokenExpiryBufferMs = 30_000;
+
+  // null means the token has no TTL (Vault returns lease_duration 0).
+  tokenExpiresAt: number | null = null;
+
+  private pendingLogin: Promise<void> | null = null;
+
+  private getTokenStatus() {
+    const isExpired =
+      this.tokenExpiresAt !== null &&
+      Date.now() >= this.tokenExpiresAt - VaultClient.tokenExpiryBufferMs;
+
+    return {
+      hasToken: this.token !== "",
+      isExpired,
+    };
+  }
+
+  private setToken(auth: AppRoleLoginResponse["auth"]) {
+    this.token = auth.client_token;
+    this.tokenExpiresAt =
+      auth.lease_duration > 0 ? Date.now() + auth.lease_duration * 1000 : null;
+  }
+
   async approleLogin({
     roleId,
     secretId,
@@ -74,6 +99,28 @@ export class VaultClient {
       throw new Error("Missing vault secretId");
     }
 
+    const tokenStatus = this.getTokenStatus();
+
+    if (tokenStatus.hasToken && !tokenStatus.isExpired) {
+      return;
+    }
+
+    this.pendingLogin ??= this.requestToken({ roleId, secretId }).finally(
+      () => {
+        this.pendingLogin = null;
+      }
+    );
+
+    return this.pendingLogin;
+  }
+
+  private async requestToken({
+    roleId,
+    secretId,
+  }: {
+    roleId: string;
+    secretId: string;
+  }) {
     const url = this.resolveUrl(`${this.version}/auth/approle/login`);
 
     const req = await fetch(url, {
@@ -88,7 +135,15 @@ export class VaultClient {
       const data = (await req.json()) as AppRoleLoginResponse;
 
       if (data.auth.client_token) {
-        this.token = data.auth.client_token;
+        this.setToken(data.auth);
+      } else {
+        const missingTokenError = new VaultError(
+          "Failed to obtain client token from vault."
+        );
+        missingTokenError.status = req.status;
+        missingTokenError.statusText = req.statusText;
+        missingTokenError.url = url;
+        throw missingTokenError;
       }
 
       return;
@@ -120,10 +175,8 @@ export class VaultClient {
     });
 
     if (req.ok) {
-      const res = await req.json();
-      const data = res.data.data as GetSecretResponse<TData>;
-
-      return data;
+      const res = (await req.json()) as GetSecretResponse<TData>;
+      return res.data.data;
     }
 
     const error = new VaultError("Failed to get secret from vault");

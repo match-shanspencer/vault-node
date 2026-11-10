@@ -1,7 +1,7 @@
 {
   "name": "@match/vault",
   "type": "module",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Vault integration for NodeJS applications using ES Modules, or CommonJS.",
   "repository": {
     "type": "git",
@@ -23,17 +23,19 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "@types/bun": "^1.4.4",
     "@types/node": "^20.14.2",
     "dotenv": "^16.4.5",
     "prettier": "^3.3.2",
-    "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   },
   "scripts": {
+    "prepare": "bun run build",
     "prebuild": "rm -rf ./dist/",
-    "prepublishOnly": "yarn build",
-    "build": "tsc && tsc -p tsconfig.cjs.json && node --loader ts-node/esm scripts/copy-package.js",
-    "example": "node --loader ts-node/esm  ./example/index.ts"
+    "prepublishOnly": "bun run build",
+    "build": "tsc && tsc -p tsconfig.cjs.json && bun ./scripts/copy-package.js",
+    "example": "bun ./example/index.ts",
+    "test": "bun test"
   },
   "author": "Shan Spencer",
   "license": "ISC"

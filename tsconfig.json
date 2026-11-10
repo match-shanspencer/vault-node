@@ -107,9 +107,5 @@
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
   // "exclude": ["scripts", "node_modules"],
-  "include": ["src"],
-  "ts-node": {
-    "files": true,
-    "transpileOnly": true
-  }
+  "include": ["src"]
 }
